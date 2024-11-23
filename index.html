@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta charset="UTF-8" />
+    <title>melodecho</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/p5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/addons/p5.sound.min.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="mode-toggle">
+      <button id="btn-practice" data-mode="practice" class="active">
+        Practice Mode
+      </button>
+      <button id="btn-daily" data-mode="daily">Daily Mode</button>
+    </div>
+    <div class="game-container">
+      <h1>MelodEcho</h1>
+      <div id="attempts">Attempts remaining: 5</div>
+      <div id="test-keyboard"></div>
+      <div class="note-spacer" style="height: 20px"></div>
+      <div id="note-grid"></div>
+      <div class="game-controls">
+        <button id="playTarget" class="game-button">Play Target Melody</button>
+        <div id="plays-remaining">2 plays remaining</div>
+        <button id="submit" class="game-button">Submit Guess</button>
+        <button id="newGame" class="game-button hidden">New Game</button>
+      </div>
+      <div id="message"></div>
+    </div>
+    <!-- Share Button -->
+    <button id="shareButton" class="share-button" style="display: none">
+      Share
+    </button>
+
+    <!-- Stats Button -->
+    <button id="statsButton" class="stats-button">Stats</button>
+
+    <!-- Modal -->
+    <div id="gameResultModal" class="modal">
+      <div class="modal-content">
+        <h2 id="modalMessage">You won! 🎉</h2>
+        <div id="modalShareText" class="share-text"></div>
+        <div class="modal-buttons">
+          <button id="copyToClipboardButton">Copy to Clipboard</button>
+          <button id="closeModalButton">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Modal -->
+    <div id="statsModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <h2>Your Stats</h2>
+        <div id="statsContent">
+          <!-- Stats content goes here -->
+        </div>
+        <button id="closeStatsModalButton">Close</button>
+      </div>
+    </div>
+
+    <!-- <div id="shareModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Share your result!</h2>
+        <div id="modalShareText" class="share-text"></div>
+        <button id="copyButton" class="game-button">Copy to Clipboard</button>
+      </div>
+    </div> -->
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,379 @@
+body {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  opacity: 1; /* Default fully visible */
+  transition: opacity 0.5s ease; /* Smooth fade effect */
+}
+
+body.fade-out {
+  opacity: 0; /* Fade out */
+}
+.mode-toggle button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #ccc;
+  color: #333;
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.mode-toggle button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.mode-toggle button:hover {
+  background-color: #0056b3;
+  color: #fff;
+}
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: min(20px, 4vw);
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.game-button:disabled {
+  background: #404040;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.note-row {
+  display: flex;
+  gap: 4px;
+  margin: 10px 0;
+}
+
+.note-button {
+  width: min(40px, 8vw);
+  height: min(40px, 8vw);
+  border: 2px solid #444;
+  background: #2d2d2d;
+  color: #e0e0e0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.note-button:hover {
+  background: #3d3d3d;
+  border-color: #555;
+}
+
+.note-button.selected {
+  background: #c1fbfa; /* Much lighter grey for selected state */
+  color: white;
+  border-color: #999; /* Lighter border for selected state */
+}
+
+.note-button.correct {
+  background: #40ce47;
+  color: white;
+  border-color: #1b5e20;
+  cursor: not-allowed;
+}
+
+.note-button.playing {
+  background: #1976d2;
+  color: white;
+  border-color: #1565c0;
+}
+
+h1 {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#attempts,
+#plays-remaining {
+  font-size: clamp(0.8rem, 4vw, 1.2rem);
+  text-align: center;
+  color: #bbb;
+}
+
+.game-controls {
+  margin: 20px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background: #1976d2;
+  color: white;
+  cursor: pointer;
+  width: min(200px, 80vw);
+  font-size: clamp(14px, 3vw, 16px);
+  transition: background-color 0.2s;
+}
+
+.game-button:hover:not(:disabled) {
+  background: #1565c0;
+}
+
+#plays-remaining {
+  font-size: 0.9em;
+  color: #888;
+  margin: 5px 0;
+}
+
+.keyboard-row {
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #2d2d2d;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.test-button {
+  background: #333;
+  border: 2px solid #444;
+  color: #e0e0e0;
+}
+
+.test-button:hover {
+  background: #404040;
+}
+
+.test-button.playing {
+  background: #1976d2;
+  color: white;
+  border-color: #1565c0;
+}
+
+/* Media query for small devices */
+@media (max-width: 600px) {
+  .note-row {
+    gap: 1px;
+  }
+
+  .note-button {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .keyboard-row {
+    padding: 5px;
+  }
+
+  .game-controls {
+    margin: 10px;
+    gap: 8px;
+  }
+}
+
+/* Media query for very small devices */
+@media (max-width: 350px) {
+  .note-button {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Prevent zooming on mobile when clicking buttons */
+@media (max-width: 768px) {
+  button {
+    touch-action: manipulation;
+  }
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#gameResultModal button {
+  margin: 10px;
+}
+
+#gameResultModal p {
+  margin: 20px 0;
+}
+#gameResultModal {
+  display: none; /* Ensure hidden by default */
+}
+
+.modal-content {
+  background-color: #1a1a1a;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+  text-align: center;
+}
+
+button {
+  margin: 2px;
+  padding: 2px 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+}
+
+/* Message styling */
+#message {
+  color: #4caf50;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
+}
+.hidden {
+  display: none;
+}
+.stats-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.stats-button:hover {
+  background-color: #1e88e5;
+}
+.share-text {
+  white-space: pre-wrap;
+  font-family: monospace;
+  margin: 15px 0;
+  padding: 10px;
+  background: #404040;
+  border-radius: 4px;
+}
+.share-button {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.share-button:hover {
+  background-color: #1e88e5;
+}
+
+#closeModalButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#closeModalButton:hover {
+  background-color: #1e88e5;
+}
+
+#copyToClipboardButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#copyToClipboardButton:hover {
+  background-color: #1e88e5;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666;
+}
+
+.guess-distribution {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.guess-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.guess-label {
+  width: 20px;
+  text-align: right;
+}
+
+.guess-bar-container {
+  flex-grow: 1;
+  height: 20px;
+}
+
+.guess-bar {
+  background-color: #538d4e;
+  height: 100%;
+  min-width: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  color: white;
+  transition: width 0.3s ease;
+}
+
+.guess-count {
+  margin-left: 5px;
+}
