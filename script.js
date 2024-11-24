@@ -71,8 +71,8 @@ function setup() {
     // Generate remaining 5 notes within ±4 steps of previous note
     for (let i = 1; i < 6; i++) {
       let prevNote = targetMelody[i - 1];
-      let minNote = Math.max(0, prevNote - 4);
-      let maxNote = Math.min(11, prevNote + 4);
+      let minNote = Math.max(0, prevNote - 12);
+      let maxNote = Math.min(11, prevNote + 12);
       targetMelody.push(floor(random(minNote, maxNote + 1)));
     }
   } else {
@@ -168,7 +168,7 @@ function setup() {
   const modalShareText = document.getElementById("modalShareText");
   shareButton.addEventListener("click", () => {
     // Set the shareable text
-    const shareableText = generateShareableText(); // Your custom function for shareable content
+    const shareableText = generateShareText(); // Your custom function for shareable content
     modalShareText.textContent = shareableText;
 
     // Display the modal
@@ -484,10 +484,11 @@ function switchGameMode(mode) {
 
       // Disable game controls
       document.getElementById("submit").disabled = true;
-      document.getElementById("playTarget").disabled = true;
-
+      // document.getElementById("playTarget").disabled = false;
+      showShareModal();
+      playMelody(dailyState.targetMelody, true);
       // Show stats
-      showStatsModal();
+      // showStatsModal();
     } else {
       // New daily game
       targetMelody = generateDailyMelody();
@@ -511,9 +512,9 @@ function resetGame() {
     .then(() => {
       gameWon = false;
       const shareButton = document.getElementById("shareButton");
-      if (shareButton) {
-        shareButton.style.display = "none";
-      }
+      // if (shareButton) {
+      //   shareButton.style.display = "none";
+      // }
       guessHistory = [];
       stopAllSounds();
 
@@ -573,26 +574,33 @@ function generateShareText() {
   if (!targetMelody || targetMelody.length !== 6) {
     return "Error: Melody not generated.";
   }
+  let shareText = "www.melodEcho.com" + "\n\n";
 
-  const melodyNum = melodyToNumber(targetMelody);
-  let shareText = `MelodEcho #${padNumber(melodyNum)}\n\n`;
+  if (!gameWon) {
+    // let shareText = "www.melodEcho.com" + "\n";
+    console.log(shareText);
+  } else {
+    const melodyNum = melodyToNumber(targetMelody);
+    shareText += `MelodEcho #${padNumber(melodyNum)}\n\n`;
 
-  if (gameMode === "daily") {
-    shareText = "MelodEcho Daily Challenge\n\n" + shareText;
+    if (gameMode === "daily") {
+      shareText += "MelodEcho Daily Challenge\n\n";
+    }
+
+    guessHistory.forEach((guess) => {
+      const rowText = guess
+        .map((note, colIndex) =>
+          note === targetMelody[colIndex] ? "🟩" : "⬛"
+        )
+        .join("");
+      shareText += rowText + "\n";
+    });
+
+    const attemptsUsed = 5 - attempts;
+    shareText += `\nSolved in ${attemptsUsed} attempts!\n`;
+    shareText += `The melody was: ${targetMelody.join(",")}\n`;
+    // shareText += "www.melodEcho.com";
   }
-
-  guessHistory.forEach((guess) => {
-    const rowText = guess
-      .map((note, colIndex) => (note === targetMelody[colIndex] ? "🟩" : "⬛"))
-      .join("");
-    shareText += rowText + "\n";
-  });
-
-  const attemptsUsed = 5 - attempts;
-  shareText += `\nSolved in ${attemptsUsed} attempts!\n`;
-  shareText += `The melody was: ${targetMelody.join(",")}\n`;
-  shareText += "fractalkitty.com/melodecho";
-
   return shareText;
 }
 

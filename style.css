@@ -253,10 +253,11 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  background-color: #1a1a1a;
+  background-color: #caabff;
+  color: #1a0047;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 6px #ae92de;
 }
 
 #gameResultModal button {
@@ -271,10 +272,10 @@ h1 {
 }
 
 .modal-content {
-  background-color: #1a1a1a;
+  background-color: #e2d1ff;
   margin: 5% auto;
   padding: 20px;
-  border: 1px solid #888;
+  border: 1px solid #481899;
   width: 80%;
   max-width: 400px;
   text-align: center;
@@ -294,7 +295,7 @@ button:hover {
 
 /* Message styling */
 #message {
-  color: #4caf50;
+  color: #27006b;
   font-weight: bold;
   margin-top: 20px;
   text-align: center;
@@ -303,16 +304,17 @@ button:hover {
   display: none;
 }
 .stats-button {
-  position: fixed;
+  position: flex;
   top: 10px;
   right: 10px;
-  padding: 10px 20px;
+  padding: 10px 12px;
   font-size: 16px;
-  background-color: #2196f3;
+  background-color: #6626d4;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 1.2em;
 }
 
 .stats-button:hover {
@@ -323,23 +325,23 @@ button:hover {
   font-family: monospace;
   margin: 15px 0;
   padding: 10px;
-  background: #ccd7cd;
+  background: #ece0ff;
   border-radius: 4px;
 }
 .share-button {
-  position: fixed;
+  position: flex;
   top: 60px;
   right: 10px;
   padding: 5px;
   font-size: 16px;
-  background-color: #6113e8;
+  background-color: #6626d4;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 .share-icon {
-  width: 32px; /* Scales the SVG relative to the button size */
+  width: 24px; /* Scales the SVG relative to the button size */
   height: auto; /* Maintains the aspect ratio of the icon */
   pointer-events: none; /* Prevents interaction with the SVG */
   color: #fff;
@@ -348,16 +350,30 @@ button:hover {
 .share-button:hover {
   background-color: #eb5951;
 }
-
+.sharingStuff {
+  display: flex;
+  margin: 15px auto;
+}
 #closeModalButton {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #2196f3;
+  background-color: #6626d4;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
+
+#closeStatsModalButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #6626d4;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 #closeModalButton:hover {
   background-color: #eb5951;
 }
@@ -365,7 +381,7 @@ button:hover {
 #copyToClipboardButton {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #2196f3;
+  background-color: #6626d4;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -396,7 +412,7 @@ button:hover {
 
 .stat-label {
   font-size: 12px;
-  color: #666;
+  color: #341865;
 }
 
 .guess-distribution {
@@ -423,7 +439,7 @@ button:hover {
 }
 
 .guess-bar {
-  background-color: #538d4e;
+  background-color: #6626d4;
   height: 100%;
   min-width: 20px;
   display: flex;
