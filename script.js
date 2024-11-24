@@ -484,7 +484,6 @@ function checkGuess() {
 }
 function switchGameMode(mode) {
   gameMode = mode;
-
   document.querySelectorAll(".mode-toggle button").forEach((btn) => {
     btn.classList.remove("active");
   });
@@ -495,31 +494,30 @@ function switchGameMode(mode) {
     resetGame();
   } else if (mode === "daily") {
     document.getElementById("newGame").classList.add("hidden");
-
+    targetMelody = generateDailyMelody();
     // Check if daily has been completed
     const dailyState = getDailyState();
-    if (dailyState) {
+    if (
+      dailyState &&
+      dailyState.targetMelody.toString() === targetMelody.toString()
+    ) {
       // If daily is completed, show stats and disable game
       gameWon = dailyState.gameWon;
       attempts = dailyState.attempts;
       guessHistory = dailyState.guessHistory;
       targetMelody = dailyState.targetMelody;
-
       // Disable game controls
       document.getElementById("submit").disabled = true;
-      // document.getElementById("playTarget").disabled = false;
-      showShareModal();
-      // playMelody(dailyState.targetMelody, true);
-      // Show stats
-      // showStatsModal();
+      document.getElementById("message").textContent =
+        "You've already completed today's melody!";
+      // You could also add visual indicators here
+      // Like changing button colors or showing a completion icon
     } else {
       // New daily game
-      targetMelody = generateDailyMelody();
       resetGame();
     }
   }
 }
-
 // Add event listeners for buttons
 document.querySelectorAll(".mode-toggle button").forEach((button) => {
   button.addEventListener("click", () => {
