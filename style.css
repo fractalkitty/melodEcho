@@ -272,6 +272,8 @@ h1 {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 6px #ae92de;
+  width: 90%;
+  max-width: 300px;
 }
 
 #gameResultModal button {

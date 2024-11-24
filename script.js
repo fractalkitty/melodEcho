@@ -452,9 +452,7 @@ function checkGuess() {
   attempts--;
   playsRemaining = 2;
 
-  document.getElementById(
-    "attempts"
-  ).textContent = `Attempts remaining: ${attempts}`;
+  document.getElementById("attempts").textContent = `Attempts: ${attempts}`;
   updatePlaysRemaining();
 
   if (allCorrect) {
