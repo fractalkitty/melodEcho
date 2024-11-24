@@ -368,12 +368,12 @@ function playMelody(melody, highlightNotes = true) {
             const prevButton = document.getElementById(
               `button-${lastHighlightedRow}-${col}`
             );
-            prevButton.style.border = "2px solid #ccc";
+            prevButton.style.border = "2px solid #714ab5";
           }
         }
         for (let col = 0; col < 12; col++) {
           const button = document.getElementById(`button-${i}-${col}`);
-          button.style.border = "2px solid #2196F3";
+          button.style.border = "5px solid #eb5951";
         }
         lastHighlightedRow = i;
         await playNote(noteIndex);
@@ -397,7 +397,7 @@ function playMelody(melody, highlightNotes = true) {
           const button = document.getElementById(
             `button-${lastHighlightedRow}-${col}`
           );
-          button.style.border = "2px solid #ccc";
+          button.style.border = "2px solid #714ab5";
         }
       }
     }, 500);
@@ -444,6 +444,7 @@ function checkGuess() {
     if (gameMode === "daily") {
       saveDailyState();
       updateStats(true, attempts);
+      showShareModal();
     }
     document.getElementById("message").textContent = "You won! 🎉🎉🎉";
     document.getElementById("submit").disabled = true;
@@ -555,7 +556,7 @@ function resetGame() {
         for (let col = 0; col < 12; col++) {
           const button = document.getElementById(`button-${row}-${col}`);
           button.className = "note-button";
-          button.style.border = "2px solid #444";
+          button.style.border = "2px solid #714ab5";
         }
       }
 

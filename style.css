@@ -1,35 +1,41 @@
 body {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
+  background-color: #c0afde;
+  color: #140829;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   opacity: 1; /* Default fully visible */
   transition: opacity 0.5s ease; /* Smooth fade effect */
 }
-
-body.fade-out {
-  opacity: 0; /* Fade out */
+.mode-toggle {
+  display: flex;
+  margin: auto;
+  width: 150px;
 }
 .mode-toggle button {
   padding: 10px 20px;
   border: none;
-  background-color: #ccc;
-  color: #333;
+  background-color: #635182;
+  color: #eae1fa;
   cursor: pointer;
-  margin: 5px;
-  border-radius: 5px;
+  margin: auto;
+  margin-bottom: 0px;
+  font-size: 1.3em;
+  padding: 10px 15px 5px 15px;
+  border-radius: 5px 5px 0px 0px;
   transition: background-color 0.3s;
 }
 
 .mode-toggle button.active {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #eae1fa;
+  color: #2c115c;
 }
 
-.mode-toggle button:hover {
-  background-color: #0056b3;
-  color: #fff;
+.mode-toggle button.active :hover {
+  background-color: #eb5951;
+  color: #eae1fa;
 }
 .game-container {
+  background: #eae1fa;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,73 +43,117 @@ body.fade-out {
   max-width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
+  max-width: 800px;
+  height: 100vh;
 }
 
 .game-button:disabled {
-  background: #404040;
-  color: #666;
+  background: #666;
+  color: #eae1fa;
   cursor: not-allowed;
 }
 
 .note-row {
   display: flex;
-  gap: 4px;
+  gap: 2px;
   margin: 10px 0;
+  padding: 2px;
+  border: 2px solid #dfccff;
+  background: #dfccff;
+  border-radius: 12px;
 }
 
 .note-button {
   width: min(40px, 8vw);
   height: min(40px, 8vw);
-  border: 2px solid #444;
-  background: #2d2d2d;
-  color: #e0e0e0;
-  border-radius: 4px;
+  border: 2px solid #714ab5;
+  background: #714ab5;
+  color: #eae1fa;
+  border-radius: 50%; /* Ensures a perfect circle */
   cursor: pointer;
   transition: all 0.2s;
+  position: relative; /* Enables positioning of the pseudo-element */
+}
+
+.note-button::before {
+  content: "";
+  position: absolute;
+  top: 50%; /* Centers vertically */
+  left: 50%; /* Centers horizontally */
+  transform: translate(-50%, -50%) rotate(70deg); /* Centers and rotates */
+  width: 90%; /* Width of the ellipse relative to the circle */
+  height: 90%; /* Height of the ellipse relative to the circle */
+  background: #eae1fa; /* Matches the button's background */
+  border: 2px solid #eae1fa; /* Matches the button's border */
+  border-radius: 50%; /* Makes it an ellipse */
 }
 
 .note-button:hover {
-  background: #3d3d3d;
-  border-color: #555;
+  background: #eb5951;
+  border-color: #4b2b82;
+}
+
+.note-button:hover::before {
+  background: #eb5951;
+  border-color: #eb5951;
 }
 
 .note-button.selected {
-  background: #c1fbfa; /* Much lighter grey for selected state */
+  background: #4b2b82; /* Much lighter grey for selected state */
   color: white;
-  border-color: #999; /* Lighter border for selected state */
+  border-color: #4b2b82; /* Lighter border for selected state */
+}
+
+.note-button.selected::before {
+  content: "";
+  position: absolute;
+  top: 50%; /* Centers vertically */
+  left: 50%; /* Centers horizontally */
+  transform: translate(-50%, -50%) rotate(70deg); /* Centers and rotates */
+  width: 70%; /* Width of the ellipse relative to the circle */
+  height: 50%; /* Height of the ellipse relative to the circle */
+  background: #eae1fa; /* Matches the button's background */
+  border: 2px solid #eae1fa; /* Matches the button's border */
+  border-radius: 50%; /* Makes it an ellipse */
 }
 
 .note-button.correct {
   background: #40ce47;
   color: white;
-  border-color: #1b5e20;
+  border-color: #4b2b82;
   cursor: not-allowed;
+}
+.note-button.correct::before {
+  display: none;
 }
 
 .note-button.playing {
-  background: #1976d2;
+  background: #eb5951;
   color: white;
-  border-color: #1565c0;
+  border-color: #eb5951;
+}
+.note-button.playing::before {
+  display: none;
 }
 
 h1 {
   font-size: clamp(1.5rem, 5vw, 2.5rem);
   text-align: center;
-  color: #fff;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: #4b2b82;
+  /* text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
 }
 
 #attempts,
 #plays-remaining {
   font-size: clamp(0.8rem, 4vw, 1.2rem);
   text-align: center;
-  color: #bbb;
+  color: #673bb3;
 }
 
 .game-controls {
-  margin: 20px;
+  margin: auto;
   display: flex;
-  gap: 10px;
+  gap: 5px;
   flex-direction: column;
   align-items: center;
 }
@@ -112,53 +162,41 @@ h1 {
   padding: 10px 20px;
   font-size: 16px;
   border: none;
-  border-radius: 4px;
-  background: #1976d2;
+  border-radius: 12px;
+  background: #571eba;
   color: white;
   cursor: pointer;
-  width: min(200px, 80vw);
-  font-size: clamp(14px, 3vw, 16px);
+  /* width: min(200px, 80vw); */
+
+  font-size: clamp(16px, 3vw, 20px);
   transition: background-color 0.2s;
 }
-
 .game-button:hover:not(:disabled) {
-  background: #1565c0;
+  background: #eb5951;
 }
-
+#playTarget {
+  font-size: 2em;
+  margin: 15px 0px 0px 0px;
+}
 #plays-remaining {
   font-size: 0.9em;
-  color: #888;
-  margin: 5px 0;
+  color: #655485;
+  margin: 0px;
 }
 
 .keyboard-row {
   margin-bottom: 20px;
-  padding: 10px;
-  background: #2d2d2d;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.test-button {
-  background: #333;
-  border: 2px solid #444;
-  color: #e0e0e0;
-}
-
-.test-button:hover {
-  background: #404040;
-}
-
-.test-button.playing {
-  background: #1976d2;
-  color: white;
-  border-color: #1565c0;
+  padding: 5px;
+  background: #27006b;
+  border-radius: 12px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
 }
 
 /* Media query for small devices */
 @media (max-width: 600px) {
   .note-row {
     gap: 1px;
+    padding: 5px;
   }
 
   .note-button {
@@ -169,6 +207,7 @@ h1 {
 
   .keyboard-row {
     padding: 5px;
+    gap: 1px;
   }
 
   .game-controls {
@@ -178,10 +217,24 @@ h1 {
 }
 
 /* Media query for very small devices */
-@media (max-width: 350px) {
+@media (max-width: 450px) {
   .note-button {
-    width: 24px;
-    height: 24px;
+    width: 23px;
+    height: 23px;
+  }
+  .note-row {
+    gap: 1px;
+    padding: 2px;
+  }
+  .keyboard-row {
+    padding: 3px;
+    gap: 1px;
+  }
+  #play-me {
+    margin: -75px 0px 55px 0px;
+    padding: 0;
+    color: #eae1fa;
+    font-size: 0.9em;
   }
 }
 
@@ -236,7 +289,7 @@ button {
 }
 
 button:hover {
-  background-color: #f0f0f0;
+  background-color: #eb5951;
 }
 
 /* Message styling */
@@ -263,31 +316,37 @@ button:hover {
 }
 
 .stats-button:hover {
-  background-color: #1e88e5;
+  background-color: #eb5951;
 }
 .share-text {
   white-space: pre-wrap;
   font-family: monospace;
   margin: 15px 0;
   padding: 10px;
-  background: #404040;
+  background: #ccd7cd;
   border-radius: 4px;
 }
 .share-button {
   position: fixed;
   top: 60px;
   right: 10px;
-  padding: 10px 20px;
+  padding: 5px;
   font-size: 16px;
-  background-color: #2196f3;
+  background-color: #6113e8;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
+.share-icon {
+  width: 32px; /* Scales the SVG relative to the button size */
+  height: auto; /* Maintains the aspect ratio of the icon */
+  pointer-events: none; /* Prevents interaction with the SVG */
+  color: #fff;
+}
 
 .share-button:hover {
-  background-color: #1e88e5;
+  background-color: #eb5951;
 }
 
 #closeModalButton {
@@ -300,7 +359,7 @@ button:hover {
   cursor: pointer;
 }
 #closeModalButton:hover {
-  background-color: #1e88e5;
+  background-color: #eb5951;
 }
 
 #copyToClipboardButton {
@@ -313,7 +372,7 @@ button:hover {
   cursor: pointer;
 }
 #copyToClipboardButton:hover {
-  background-color: #1e88e5;
+  background-color: #eb5951;
 }
 .stats-grid {
   display: grid;

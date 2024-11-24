@@ -14,20 +14,19 @@
   </head>
   <body>
     <div class="mode-toggle">
-      <button id="btn-practice" data-mode="practice" class="active">
-        Practice Mode
-      </button>
-      <button id="btn-daily" data-mode="daily">Daily Mode</button>
+      <button id="btn-practice" data-mode="practice">Practice</button>
+      <button id="btn-daily" data-mode="daily" class="active">Daily</button>
     </div>
     <div class="game-container">
       <h1>MelodEcho</h1>
       <div id="attempts">Attempts remaining: 5</div>
       <div id="test-keyboard"></div>
+
+      <button id="playTarget" class="game-button">&#9654;</button>
+      <div id="plays-remaining">2 plays remaining</div>
       <div class="note-spacer" style="height: 20px"></div>
       <div id="note-grid"></div>
       <div class="game-controls">
-        <button id="playTarget" class="game-button">Play Target Melody</button>
-        <div id="plays-remaining">2 plays remaining</div>
         <button id="submit" class="game-button">Submit Guess</button>
         <button id="newGame" class="game-button hidden">New Game</button>
       </div>
@@ -35,11 +34,11 @@
     </div>
     <!-- Share Button -->
     <button id="shareButton" class="share-button" style="display: none">
-      Share
+      <img src="share.svg" alt="Share" class="share-icon" />
     </button>
 
     <!-- Stats Button -->
-    <button id="statsButton" class="stats-button">Stats</button>
+    <button id="statsButton" class="stats-button">&Sigma;</button>
 
     <!-- Modal -->
     <div id="gameResultModal" class="modal">
