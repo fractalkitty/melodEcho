@@ -194,7 +194,7 @@ function setup() {
       // Restore the completed daily game state
       gameWon = dailyState.gameWon;
       attempts = dailyState.attempts;
-      guessHistory = dailyState.guessHistory;
+      guessHistory = [];
       targetMelody = dailyState.targetMelody;
 
       // Disable game controls
@@ -207,15 +207,18 @@ function setup() {
         : "Game Over! Try again tomorrow!";
 
       // Reconstruct the game state visually
-      guessHistory.forEach((guess, rowIndex) => {
-        guess.forEach((note, colIndex) => {
-          const button = document.getElementById(
-            `button-${rowIndex}-${colIndex}`
-          );
-          if (note === targetMelody[colIndex]) {
-            button.classList.add("correct");
-          }
-        });
+      // guessHistory.forEach((guess, rowIndex) => {
+      //   guess.forEach((note, colIndex) => {
+      //     const button = document.getElementById(
+      //       `button-${rowIndex}-${colIndex}`
+      //     );
+      //     if (note === targetMelody[colIndex]) {
+      //       button.classList.add("correct");
+      //     }
+      //   });
+      targetMelody.forEach((note, rowIndex) => {
+        const button = document.getElementById(`button-${rowIndex}-${note}`);
+        button.classList.add("correct");
       });
 
       // Restore share button if game was won
