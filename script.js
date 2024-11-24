@@ -90,6 +90,21 @@ function setup() {
       const button = document.createElement("button");
       button.className = "note-button";
       button.id = `button-${row}-${col}`;
+      // Add touch event handler alongside click handler
+      button.addEventListener("touchstart", (e) => {
+        e.preventDefault(); // Prevent hover state and double-firing
+        if (!correctButtons.has(row) && !isPlaying) {
+          // Deselect all buttons in this row
+          for (let i = 0; i < 12; i++) {
+            document
+              .getElementById(`button-${row}-${i}`)
+              .classList.remove("selected");
+          }
+          // Select this button
+          button.classList.add("selected");
+          currentGuess[row] = col;
+        }
+      });
 
       button.addEventListener("click", () => {
         if (!correctButtons.has(row) && !isPlaying) {
