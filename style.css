@@ -140,6 +140,7 @@ h1 {
   font-size: clamp(1.5rem, 5vw, 2.5rem);
   text-align: center;
   color: #4b2b82;
+  margin: auto;
   /* text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
 }
 
@@ -193,7 +194,7 @@ h1 {
 }
 
 /* Media query for small devices */
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .note-row {
     gap: 1px;
     padding: 5px;
