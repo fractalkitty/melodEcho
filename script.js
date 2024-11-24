@@ -486,7 +486,7 @@ function switchGameMode(mode) {
       document.getElementById("submit").disabled = true;
       // document.getElementById("playTarget").disabled = false;
       showShareModal();
-      playMelody(dailyState.targetMelody, true);
+      // playMelody(dailyState.targetMelody, true);
       // Show stats
       // showStatsModal();
     } else {
