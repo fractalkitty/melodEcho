@@ -13,6 +13,11 @@ body {
 h1 {
   font-family: "melodecho", Arial, sans-serif;
 }
+.construction {
+  font-family: "melodecho", Arial, sans-serif;
+  color: #903;
+  font-size: 1.5em;
+}
 .mode-toggle {
   display: flex;
   margin: auto;
