@@ -203,55 +203,60 @@ function setup() {
 
   // Ensure stats button is initialized on page load
   initializeStatsButton();
+
   if (gameMode === "daily") {
     const dailyState = getDailyState();
-    if (dailyState) {
+    if (
+      dailyState &&
+      dailyState.targetMelody.toString() === targetMelody.toString()
+    ) {
       // Restore the completed daily game state
       gameWon = dailyState.gameWon;
       attempts = dailyState.attempts;
       guessHistory = [];
       targetMelody = dailyState.targetMelody;
-
       // Disable game controls
       document.getElementById("submit").disabled = true;
       document.getElementById("playTarget").disabled = true;
-
       // Show completion message
       document.getElementById("message").textContent = dailyState.gameWon
         ? `You won! 🎉 Solved in ${5 - dailyState.attempts} attempts!`
         : "Game Over! Try again tomorrow!";
-
-      // Reconstruct the game state visually
-      // guessHistory.forEach((guess, rowIndex) => {
-      //   guess.forEach((note, colIndex) => {
-      //     const button = document.getElementById(
-      //       `button-${rowIndex}-${colIndex}`
-      //     );
-      //     if (note === targetMelody[colIndex]) {
-      //       button.classList.add("correct");
-      //     }
-      //   });
       targetMelody.forEach((note, rowIndex) => {
         const button = document.getElementById(`button-${rowIndex}-${note}`);
         button.classList.add("correct");
       });
-
-      // Restore share button if game was won
-      if (dailyState.gameWon) {
-        const shareButton = document.getElementById("shareButton");
-        shareButton.style.display = "block";
-        shareButton.addEventListener("click", () => {
-          const modal = document.getElementById("gameResultModal");
-          document.getElementById("modalShareText").textContent =
-            dailyState.shareText;
-          modal.style.display = "flex";
-        });
-      }
-
       return; // Exit setup early as game is already completed
     }
   }
 }
+
+//
+//   if (gameMode === "daily") {
+//     const dailyState = getDailyState();
+//     if (dailyState) {
+//       // Restore the completed daily game state
+//       gameWon = dailyState.gameWon;
+//       attempts = dailyState.attempts;
+//       guessHistory = [];
+//       targetMelody = dailyState.targetMelody;
+//
+//       // Disable game controls
+//       document.getElementById("submit").disabled = true;
+//       document.getElementById("playTarget").disabled = true;
+//
+//       // Show completion message
+//       document.getElementById("message").textContent = dailyState.gameWon
+//         ? `You won! 🎉 Solved in ${5 - dailyState.attempts} attempts!`
+//         : "Game Over! Try again tomorrow!";
+//       targetMelody.forEach((note, rowIndex) => {
+//         const button = document.getElementById(`button-${rowIndex}-${note}`);
+//         button.classList.add("correct");
+//       });
+//
+//       return; // Exit setup early as game is already completed
+//     }
+//   }
 
 function seededRandom(seed) {
   let x = Math.sin(seed) * 10000;
