@@ -19,7 +19,7 @@ function preload() {
 function setup() {
   noCanvas();
   noLoop();
-
+  //DOM
   // Create the test keyboard
   const keyboardDiv = document.getElementById("test-keyboard");
   const keyboardRow = document.createElement("div");
@@ -528,9 +528,6 @@ function resetGame() {
     .then(() => {
       gameWon = false;
       const shareButton = document.getElementById("shareButton");
-      // if (shareButton) {
-      //   shareButton.style.display = "none";
-      // }
       guessHistory = [];
       stopAllSounds();
 
@@ -538,6 +535,7 @@ function resetGame() {
       gameWon = false;
       attempts = 5;
       playsRemaining = 2;
+      correctButtons = new Set(); // Added this line to reset the correctButtons state
 
       // Hide modal initially
       document.getElementById("gameResultModal").style.display = "none";
@@ -552,16 +550,11 @@ function resetGame() {
           targetMelody.push(floor(random(minNote, maxNote + 1)));
         }
       } else if (gameMode === "daily") {
-        // Check if we've already set the daily melody
-        // const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
-        // const dailySeedKey = `daily_seed_${today}`;
         generateDailyMelody();
-        // If we haven't generated today's melody, generate and save it
-        // let savedSeed = localStorage.getItem(dailySeedKey);
       }
 
       // Reset UI
-      document.getElementById("attempts").textContent = "Attempts remaining: 5";
+      document.getElementById("attempts").textContent = "Attempts: 5";
       document.getElementById("message").textContent = "";
       document.getElementById("plays-remaining").textContent =
         "2 plays remaining";
