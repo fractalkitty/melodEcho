@@ -371,6 +371,7 @@ function playMelody(melody, highlightNotes = true) {
   isPlaying = true;
   document.getElementById("submit").disabled = true;
   document.getElementById("playTarget").disabled = true;
+  document.getElementById("newGame").disabled = true;
 
   let lastHighlightedRow = -1;
 
@@ -410,6 +411,7 @@ function playMelody(melody, highlightNotes = true) {
       if (playsRemaining > 0) {
         document.getElementById("playTarget").disabled = false;
       }
+      document.getElementById("newGame").disabled = false;
       if (!highlightNotes && lastHighlightedRow >= 0) {
         for (let col = 0; col < 12; col++) {
           const button = document.getElementById(
