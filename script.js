@@ -626,7 +626,7 @@ function generateShareText() {
 
     const attemptsUsed = 5 - attempts;
     shareText += `\nSolved in ${attemptsUsed} attempts!\n`;
-    shareText += `The melody was: ${targetMelody.join(",")}\n`;
+    // shareText += `The melody was: ${targetMelody.join(",")}\n`;
     // shareText += "www.melodEcho.com";
   }
   return shareText;
