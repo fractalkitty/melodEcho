@@ -13,11 +13,7 @@ body {
 h1 {
   font-family: "melodecho", Arial, sans-serif;
 }
-.construction {
-  font-family: "melodecho", Arial, sans-serif;
-  color: #903;
-  font-size: 1.5em;
-}
+
 .mode-toggle {
   display: flex;
   margin: auto;
@@ -52,9 +48,9 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: min(20px, 4vw);
+  padding: 0px;
   max-width: 100%;
-  margin: 0 auto;
+  margin: auto;
   box-sizing: border-box;
   max-width: 800px;
   height: 100%;
@@ -69,7 +65,7 @@ h1 {
 .note-row {
   display: flex;
   gap: 2px;
-  margin: 10px 0;
+  margin: 5px;
   padding: 2px;
   border: 2px solid #dfccff;
   background: #dfccff;
@@ -111,12 +107,6 @@ h1 {
   border-color: #eb5951;
 }
 
-.note-button.selected {
-  background: #4b2b82; /* Much lighter grey for selected state */
-  color: white;
-  border-color: #4b2b82; /* Lighter border for selected state */
-}
-
 .note-button.selected::before {
   content: "";
   position: absolute;
@@ -145,15 +135,48 @@ h1 {
   color: white;
   border-color: #eb5951;
 }
+
 .note-button.playing::before {
   display: none;
 }
 
+.note-button.selected {
+  background: #4b2b82; /* Much lighter grey for selected state */
+  color: white;
+  border-color: #4b2b82; /* Lighter border for selected state */
+}
+.test-button {
+  width: min(40px, 8vw);
+  height: min(40px, 8vw);
+  border: 2px solid #4b2b82;
+  border-radius: 50%; /* Ensures a perfect circle */
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative; /* Enables positioning of the pseudo-element */
+}
+.test-button:hover {
+  background: #fff;
+  border: 2px solid #ffffff;
+}
+.test-button.selected {
+  background: #4b2b82; /* Much lighter grey for selected state */
+  color: white;
+  border-color: #4b2b82; /* Lighter border for selected state */
+}
+.test-button.playing {
+  background: #4b2b82;
+  color: white;
+  border-color: #4b2b82;
+}
+
 h1 {
-  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
+  display: flex;
+  background: #4b2b82;
+  color: #dfccff;
+  padding: 10px;
   text-align: center;
-  color: #4b2b82;
-  margin: auto;
+  margin: 5px;
   display: flex;
   /* text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
 }
@@ -163,7 +186,7 @@ h1 {
   font-size: clamp(0.8rem, 4vw, 1.2rem);
   text-align: center;
   color: #673bb3;
-  margin: 0px 0px 5px 0px;
+  margin: 5px;
 }
 
 .game-controls {
@@ -201,27 +224,27 @@ h1 {
 }
 
 .keyboard-row {
-  margin-bottom: 20px;
-  padding: 5px;
-  background: #27006b;
+  display: flex;
+  gap: 2px;
+  margin: 10px;
+  padding: 2px;
+  border: 2px solid #dfccff;
+  background: #dfccff;
   border-radius: 12px;
 }
 
 @media (max-width: 1100px) {
-  .note-row {
+  .note-row,
+  .keyboard-row {
     gap: 1px;
     padding: 5px;
   }
 
-  .note-button {
+  .note-button,
+  .test-button {
     width: 28px;
     height: 28px;
     font-size: 12px;
-  }
-
-  .keyboard-row {
-    padding: 5px;
-    gap: 1px;
   }
 
   .game-controls {
@@ -232,23 +255,48 @@ h1 {
 
 /* Media query for very small devices */
 @media (max-width: 450px) {
-  .note-button {
+  .note-button,
+  .test-button {
     width: 23px;
     height: 23px;
   }
-  .note-row {
+  .note-row,
+  .keyboard-row {
     gap: 1px;
     padding: 2px;
   }
-  .keyboard-row {
-    padding: 3px;
-    gap: 1px;
-  }
+
   #play-me {
     margin: -75px 0px 55px 0px;
     padding: 0;
     color: #eae1fa;
     font-size: 0.9em;
+  }
+  button {
+    touch-action: manipulation;
+  }
+}
+
+@media (max-width: 365px) {
+  .note-button,
+  .test-button {
+    width: 21px;
+    height: 21px;
+  }
+  .note-row,
+  .keyboard-row {
+    gap: 1px;
+    padding: 1px;
+  }
+
+  #play-me {
+    margin: -75px 0px 55px 0px;
+    padding: 0;
+    color: #eae1fa;
+    font-size: 0.9em;
+  }
+  button {
+    touch-action: manipulation;
   }
 }
 
@@ -272,8 +320,16 @@ h1 {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 6px #ae92de;
-  width: 90%;
-  max-width: 300px;
+  width: 100%;
+  max-width: 500px;
+  line-height: 1.6;
+}
+.modal-image {
+  width: 80%; /* Limit the image width to 80% of the modal */
+  height: auto; /* Maintain the aspect ratio */
+  display: block;
+  margin: 0 auto; /* Center the image */
+  padding: 2px;
 }
 
 #gameResultModal button {
@@ -288,7 +344,7 @@ h1 {
 }
 
 .modal-content {
-  background-color: #e2d1ff;
+  background-color: #eae1fa;
   margin: 5% auto;
   padding: 20px;
   border: 1px solid #481899;
@@ -381,6 +437,16 @@ button:hover {
 }
 
 #closeStatsModalButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #6626d4;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#closeInfoModalButton {
   padding: 10px 20px;
   font-size: 16px;
   background-color: #6626d4;

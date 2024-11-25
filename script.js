@@ -3,7 +3,7 @@ let notes = [];
 let targetMelody = [];
 let currentGuess = new Array(6).fill(0);
 let attempts = 5;
-let playsRemaining = 2;
+let playsRemaining = 1;
 let correctButtons = new Set();
 let isPlaying = false;
 let pTime = 700; // Ensure each sound is played for 800ms
@@ -23,22 +23,25 @@ function setup() {
   // Create the test keyboard
   const keyboardDiv = document.getElementById("test-keyboard");
   const keyboardRow = document.createElement("div");
-  keyboardRow.className = "note-row keyboard-row";
+  keyboardRow.className = "keyboard-row";
 
   for (let col = 0; col < 12; col++) {
     const button = document.createElement("button");
-    button.className = "note-button test-button";
+    button.className = "test-button";
+    button.style.background = getRowColor(col);
 
     button.addEventListener("click", () => {
       const note = notes[col];
       if (note.isLoaded()) {
         stopAllSounds();
         note.play();
+        button.style.background = "#eb5951";
         button.classList.add("playing");
 
         setTimeout(() => {
           button.classList.remove("playing");
           note.stop();
+          button.style.background = getRowColor(col);
         }, pTime);
       } else {
         console.error(`Note ${col} is not loaded`);
@@ -85,6 +88,7 @@ function setup() {
   for (let row = 0; row < 6; row++) {
     const rowDiv = document.createElement("div");
     rowDiv.className = "note-row";
+    rowDiv.id = `note-row-${row}`;
 
     for (let col = 0; col < 12; col++) {
       const button = document.createElement("button");
@@ -164,6 +168,7 @@ function setup() {
           console.error("Failed to copy text:", err);
         });
     });
+
   document.addEventListener(
     "touchstart",
     function () {
@@ -173,6 +178,7 @@ function setup() {
     },
     { once: true }
   );
+  //modals
   document.addEventListener("DOMContentLoaded", setupModalListeners);
   const shareButton = document.getElementById("shareButton");
   const modal = document.getElementById("gameResultModal");
@@ -181,6 +187,11 @@ function setup() {
     "copyToClipboardButton"
   );
   const modalShareText = document.getElementById("modalShareText");
+
+  const infoButton = document.getElementById("btn-info");
+  const infoModal = document.getElementById("infoModal");
+  const closeInfoModalButton = document.getElementById("closeInfoModalButton");
+
   shareButton.addEventListener("click", () => {
     // Set the shareable text
     const shareableText = generateShareText(); // Your custom function for shareable content
@@ -203,6 +214,14 @@ function setup() {
 
   // Ensure stats button is initialized on page load
   initializeStatsButton();
+  // Info Modal Logic
+  infoButton.addEventListener("click", () => {
+    infoModal.style.display = "block";
+  });
+
+  closeInfoModalButton.addEventListener("click", () => {
+    infoModal.style.display = "none";
+  });
 
   if (gameMode === "daily") {
     const dailyState = getDailyState();
@@ -231,33 +250,6 @@ function setup() {
   }
 }
 
-//
-//   if (gameMode === "daily") {
-//     const dailyState = getDailyState();
-//     if (dailyState) {
-//       // Restore the completed daily game state
-//       gameWon = dailyState.gameWon;
-//       attempts = dailyState.attempts;
-//       guessHistory = [];
-//       targetMelody = dailyState.targetMelody;
-//
-//       // Disable game controls
-//       document.getElementById("submit").disabled = true;
-//       document.getElementById("playTarget").disabled = true;
-//
-//       // Show completion message
-//       document.getElementById("message").textContent = dailyState.gameWon
-//         ? `You won! 🎉 Solved in ${5 - dailyState.attempts} attempts!`
-//         : "Game Over! Try again tomorrow!";
-//       targetMelody.forEach((note, rowIndex) => {
-//         const button = document.getElementById(`button-${rowIndex}-${note}`);
-//         button.classList.add("correct");
-//       });
-//
-//       return; // Exit setup early as game is already completed
-//     }
-//   }
-
 function seededRandom(seed) {
   let x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
@@ -284,7 +276,7 @@ function generateDailyMelody() {
     melody.push(nextNote);
     prevNote = nextNote;
   }
-  console.log(melody);
+  // console.log(melody);
   return melody;
 }
 function getDailyState() {
@@ -324,7 +316,8 @@ function stopAllSounds() {
 function updatePlaysRemaining() {
   document.getElementById(
     "plays-remaining"
-  ).textContent = `${playsRemaining} plays remaining`;
+    // ).textContent = `${playsRemaining} plays remaining`;
+  ).textContent = ``;
   document.getElementById("playTarget").disabled = playsRemaining === 0;
 }
 
@@ -369,10 +362,20 @@ function playNote(index, rowIndex = -1, highlightRow = true) {
     return Promise.resolve();
   }
 }
-
+const getRowColor = (noteNumber) => {
+  // Reverse the ratio (11 - noteNumber)
+  const ratio = (11 - noteNumber) / 11;
+  const r = Math.round(255 - (255 - 55) * ratio);
+  const g = Math.round(255 - (255 - 23) * ratio);
+  const b = Math.round(255 - (255 - 125) * ratio);
+  const color = `rgb(${r}, ${g}, ${b})`;
+  // console.log(`Note ${noteNumber} gets color ${color}`);
+  return color;
+};
 function playMelody(melody, highlightNotes = true) {
+  // console.log(getRowColor(0));
   stopAllSounds();
-  console.log(melody);
+  // console.log(melody);
   isPlaying = true;
   document.getElementById("submit").disabled = true;
   document.getElementById("playTarget").disabled = true;
@@ -393,11 +396,18 @@ function playMelody(melody, highlightNotes = true) {
               `button-${lastHighlightedRow}-${col}`
             );
             prevButton.style.border = "2px solid #714ab5";
+
+            const prevRow = document.getElementById(
+              `note-row-${lastHighlightedRow}`
+            );
+            prevRow.style.background = "#dfccff";
           }
         }
         for (let col = 0; col < 12; col++) {
           const button = document.getElementById(`button-${i}-${col}`);
           button.style.border = "5px solid #eb5951";
+          const prevRow = document.getElementById(`note-row-${i}`);
+          prevRow.style.background = getRowColor(melody[i]);
         }
         lastHighlightedRow = i;
         await playNote(noteIndex);
@@ -424,6 +434,10 @@ function playMelody(melody, highlightNotes = true) {
           );
           button.style.border = "2px solid #714ab5";
         }
+        const prevRow = document.getElementById(
+          `note-row-${lastHighlightedRow}`
+        );
+        prevRow.style.background = "#dfccff";
       }
     }, 500);
   }
@@ -457,7 +471,7 @@ function checkGuess() {
 
   guessHistory.push([...currentGuess]);
   attempts--;
-  playsRemaining = 2;
+  playsRemaining = 1;
 
   document.getElementById("attempts").textContent = `Attempts: ${attempts}`;
   updatePlaysRemaining();
@@ -539,7 +553,7 @@ function resetGame() {
       guessHistory = [];
       gameWon = false;
       attempts = 5;
-      playsRemaining = 2;
+      playsRemaining = 1;
       correctButtons = new Set(); // Added this line to reset the correctButtons state
 
       // Hide modal initially
@@ -561,8 +575,8 @@ function resetGame() {
       // Reset UI
       document.getElementById("attempts").textContent = "Attempts: 5";
       document.getElementById("message").textContent = "";
-      document.getElementById("plays-remaining").textContent =
-        "2 plays remaining";
+      // document.getElementById("plays-remaining").textContent =
+      //   "2 plays remaining";
       document.getElementById("submit").disabled = false;
       document.getElementById("playTarget").disabled = false;
 
@@ -574,9 +588,9 @@ function resetGame() {
           button.style.border = "2px solid #714ab5";
         }
       }
-
+      stopAllSounds();
       // Log audio context state for debugging
-      console.log("Audio context state after reset:", getAudioContext().state);
+      // console.log("Audio context state after reset:", getAudioContext().state);
     });
 }
 
@@ -592,7 +606,7 @@ function generateShareText() {
 
   if (!gameWon) {
     // let shareText = "www.melodEcho.com" + "\n";
-    console.log(shareText);
+    // console.log(shareText);
   } else {
     const melodyNum = melodyToNumber(targetMelody);
     shareText += `MelodEcho #${padNumber(melodyNum)}\n\n`;
@@ -715,7 +729,8 @@ function closeModal() {
 function generateStatsText(stats) {
   const attemptsUsed = 5 - stats.attempts;
   const message = stats.gameWon ? "You won! 🎉" : "Game Over!";
-  return `${message}\nSolved in ${attemptsUsed} attempts!\nPlays remaining: ${stats.playsRemaining}`;
+  return `${message}\nSolved in ${attemptsUsed} attempts!`;
+  // return `${message}\nSolved in ${attemptsUsed} attempts!\nPlays remaining: ${stats.playsRemaining}`;
 }
 
 // Handle the Share button visibility when the game is won
